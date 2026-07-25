@@ -1,5 +1,5 @@
 deployment:
-  replicas: "1"
+  replicas: 1
   imageName: "jayashankar1994/catalogue"
   imageVersion: "1.0.0"
 ConfigMap:
