@@ -9,7 +9,7 @@ metadata:
     tier: db
     component: mongodb
 spec:
-  replicas: {{ .Values.deployment.replicas }}
+  replicas: {{ .Values.deployment.imageName }}
 
   selector:
     matchLabels:
