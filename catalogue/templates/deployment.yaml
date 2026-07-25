@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: catalogue
+  namespace: roboshop
+  labels:
+    project: roboshop
+    environment: dev
+    tier: backend
+    component: catalogue
+
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+
+  selector:
+    matchLabels:
+      project: roboshop
+      environment: dev
+      tier: backend
+      component: catalogue
+
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        environment: dev
+        tier: backend
+        component: catalogue
+    
+    spec:
+      containers:
+      - name: catalogue
+        image: "{{ .Values.deployment.imageName }}:{{ .values.deployment.imageVersion}}"
+        imagePullPolicy: Always   # Kubernetes always checks the registry and pulls the image.
+        resources:
+          requests:
+            cpu: "68m"
+            memory: "100Mi"
+          limits:
+            cpu: "68m"
+            memory: "100Mi"
+        readinessProbe:
+          # httpGet:
+          #   path: /health
+          #   port: 8080
+          tcpSocket:
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+          initialDelaySeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 2
+          periodSeconds: 10
+        envFrom:
+          - configMapRef:
+              name: catalogue
+
