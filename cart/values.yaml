@@ -1,0 +1,8 @@
+deployment:
+  replicas: "1"
+  imageName: "jayashankar1994/cart"
+  imageVersion: "1.0.0"
+configMap:
+  REDIS_HOST: "redis"
+  CATALOGUE_HOST: "catalogue"
+  CATALOGUE_PORT: "8080"
